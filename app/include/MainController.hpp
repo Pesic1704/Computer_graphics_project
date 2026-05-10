@@ -23,6 +23,8 @@ namespace my_app {
 
         void draw_tower();
 
+        void draw_reaper();
+
         void end_draw() override;
 
         void update_camera();

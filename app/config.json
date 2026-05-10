@@ -4,6 +4,10 @@
       "tower": {
         "path": "tower/tower.obj",
         "flip_uvs": false
+      },
+      "reaper": {
+        "path": "reaper/reaper.obj",
+        "flip_uvs": false
       }
     }
   },

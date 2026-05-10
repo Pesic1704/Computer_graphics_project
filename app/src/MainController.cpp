@@ -32,7 +32,7 @@ namespace my_app {
     }
 
     void MainController::draw() {
-        draw_tower();
+        draw_reaper();
     }
 
     void MainController::draw_tower() {
@@ -49,14 +49,29 @@ namespace my_app {
         tower->draw(shader);
     }
 
+    void MainController::draw_reaper() {
+        auto graphics = get<engine::graphics::GraphicsController>();
+        auto resources = get<engine::resources::ResourcesController>();
+
+        auto shader = resources->shader("basic");
+        auto reaper = resources->model("reaper");
+
+        shader->use();
+        shader->set_mat4("projection", graphics->projection_matrix());
+        shader->set_mat4("view", graphics->camera()->view_matrix());
+        shader->set_mat4("model", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f)),
+                                             glm::vec3(5.0f)));
+        reaper->draw(shader);
+    }
+
     void MainController::end_draw() {
         auto platform = get<engine::platform::PlatformController>();
         platform->swap_buffers();
     }
 
     void MainController::update_camera() {
-        auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
-        auto camera = engine::core::Controller::get<engine::graphics::GraphicsController>()->camera();
+        auto platform = get<engine::platform::PlatformController>();
+        auto camera = get<engine::graphics::GraphicsController>()->camera();
 
         float dt = platform->dt();
         if (platform->key(engine::platform::KEY_W).state() == engine::platform::Key::State::Pressed) {
