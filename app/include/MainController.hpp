@@ -27,6 +27,8 @@ namespace my_app {
 
         void draw_torch();
 
+        void draw_tree();
+
         void end_draw() override;
 
         void update_camera();

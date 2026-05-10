@@ -12,6 +12,10 @@
       "torch": {
         "path": "torch/torch.obj",
         "flip_uvs": false
+      },
+      "tree": {
+        "path": "tree/tree.obj",
+        "flip_uvs": false
       }
     }
   },
