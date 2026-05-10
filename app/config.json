@@ -16,6 +16,10 @@
       "tree": {
         "path": "tree/tree.obj",
         "flip_uvs": false
+      },
+      "floor": {
+        "path": "floor/floor.obj",
+        "flip_uvs": false
       }
     }
   },
