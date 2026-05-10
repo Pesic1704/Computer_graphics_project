@@ -1,0 +1,56 @@
+# Blender 5.1.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Bashnya
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Bashnya_baseColor.jpeg
+map_Bump -bm 1.000000 Bashnya_normal.png
+
+newmtl Etazhi
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.166500 0.166500 0.166500
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Etazhi_baseColor.jpeg
+
+newmtl Lestnica
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Lestnica_baseColor.jpeg
+map_Bump -bm 1.000000 Lestnica_normal.png
+
+newmtl Shit1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Shit1_baseColor.jpeg
+map_Bump -bm 1.000000 Shit1_normal.png
+
+newmtl Shit2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.171345 0.171345 0.171345
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Shit2_baseColor.jpeg
+map_Bump -bm 1.000000 Shit2_normal.png
