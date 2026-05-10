@@ -1,0 +1,24 @@
+newmtl Mat
+
+Ns 320.0
+Ka 1.000 1.000 1.000
+Kd 1.000 1.000 1.000
+Ks 0.000 0.000 0.000
+Ni 1.500
+d 1.0
+illum 2
+
+# Main color
+map_Kd torchColor.png
+
+# Normal map
+map_Bump torchNormal.png
+
+# Specular map (optional - ignored unless your shader uses it)
+map_Ks torchSpecular.png
+
+# Emissive map (for glow later - currently ignored by most simple shaders)
+map_Ke torchEmmisive.png
+
+# Ambient occlusion (optional - not used in basic shader)
+map_Ao torchfbx_DefaultMaterial_AmbientOcclusion.png
