@@ -32,6 +32,21 @@ namespace my_app {
     }
 
     void MainController::draw() {
+        draw_tower();
+    }
+
+    void MainController::draw_tower() {
+        auto graphics = get<engine::graphics::GraphicsController>();
+        auto resources = get<engine::resources::ResourcesController>();
+
+        auto shader = resources->shader("basic");
+        auto tower = resources->model("tower");
+
+        shader->use();
+        shader->set_mat4("projection", graphics->projection_matrix());
+        shader->set_mat4("view", graphics->camera()->view_matrix());
+        shader->set_mat4("model", glm::scale(glm::mat4(0.01f), glm::vec3(0.001f)));
+        tower->draw(shader);
     }
 
     void MainController::end_draw() {
