@@ -25,6 +25,8 @@ namespace my_app {
 
         void draw_reaper();
 
+        void draw_torch();
+
         void end_draw() override;
 
         void update_camera();

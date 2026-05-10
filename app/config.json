@@ -8,6 +8,10 @@
       "reaper": {
         "path": "reaper/reaper.obj",
         "flip_uvs": false
+      },
+      "torch": {
+        "path": "torch/torch.obj",
+        "flip_uvs": false
       }
     }
   },

@@ -32,7 +32,7 @@ namespace my_app {
     }
 
     void MainController::draw() {
-        draw_reaper();
+        draw_torch();
     }
 
     void MainController::draw_tower() {
@@ -62,6 +62,21 @@ namespace my_app {
         shader->set_mat4("model", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f)),
                                              glm::vec3(5.0f)));
         reaper->draw(shader);
+    }
+
+    void MainController::draw_torch() {
+        auto graphics = get<engine::graphics::GraphicsController>();
+        auto resources = get<engine::resources::ResourcesController>();
+
+        auto shader = resources->shader("basic");
+        auto torch = resources->model("torch");
+
+        shader->use();
+        shader->set_mat4("projection", graphics->projection_matrix());
+        shader->set_mat4("view", graphics->camera()->view_matrix());
+        shader->set_mat4("model", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f)),
+                                             glm::vec3(5.0f)));
+        torch->draw(shader);
     }
 
     void MainController::end_draw() {
