@@ -16,7 +16,7 @@ uniform mat4 projection;
 void main()
 {
     FragPos = vec3(model * vec4(aPos, 1.0));
-    Normal = aNormal;
+    Normal = mat3(transpose(inverse(model))) * aNormal;;
     TexCoords = aTexCoords;
 
     gl_Position = projection * view * model * vec4(aPos, 1.0);
@@ -25,13 +25,35 @@ void main()
 //#shader fragment
 #version 330 core
 
+in vec3 FragPos;
+in vec3 Normal;
+in vec2 TexCoords;
+
 out vec4 FragColor;
 
-in vec2 TexCoords;
+uniform vec3 dirLightDirection;
+uniform vec3 dirLightColor;
+uniform vec3 pointLightPosition;
+uniform vec3 pointLightColor;
 
 uniform sampler2D texture_diffuse1;
 
 void main()
 {
-    FragColor = vec4(texture(texture_diffuse1, TexCoords).rgb, 1.0);
+    vec3 norm = normalize(Normal);
+    vec3 textureColor = texture(texture_diffuse1, TexCoords).rgb;
+
+    vec3 ambient = 0.1 * textureColor;
+
+    vec3 dirLightDir = normalize(-dirLightDirection);
+    float dirDiff = max(dot(norm, dirLightDir), 0.0);
+    vec3 directional = dirDiff * dirLightColor * textureColor;
+
+    vec3 pointDir = normalize(pointLightPosition - FragPos);
+    float pointDiff = max(dot(norm, pointDir), 0.0);
+    float distance = length(pointLightPosition - FragPos);
+    float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * distance * distance);
+    vec3 point = pointDiff * pointLightColor * attenuation * textureColor;
+
+    FragColor = vec4(ambient + directional + point, 1.0);
 }

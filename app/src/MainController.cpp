@@ -32,11 +32,28 @@ namespace my_app {
     }
 
     void MainController::draw() {
+        set_light();
         draw_floor();
         draw_tower();
         draw_tree();
         draw_reaper();
         draw_torch();
+    }
+
+    void MainController::set_light() {
+        glm::vec3 dir_light_direction = glm::vec3(-0.3f, -1.0f, -0.2f);
+        glm::vec3 dir_light_color = glm::vec3(0.2f, 0.2f, 0.35f);
+        glm::vec3 point_light_position = glm::vec3(-1.1f, -4.1f, -18.625f);
+        glm::vec3 point_light_color = glm::vec3(1.0f, 0.6f, 0.2f);
+
+        auto resources = get<engine::resources::ResourcesController>();
+        auto shader = resources->shader("basic");
+
+        shader->use();
+        shader->set_vec3("dirLightDirection", dir_light_direction);
+        shader->set_vec3("dirLightColor", dir_light_color);
+        shader->set_vec3("pointLightPosition", point_light_position);
+        shader->set_vec3("pointLightColor", point_light_color);
     }
 
     void MainController::draw_floor() {
