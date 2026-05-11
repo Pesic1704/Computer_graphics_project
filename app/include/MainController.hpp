@@ -37,7 +37,8 @@ namespace my_app {
 
         void update_camera();
 
-        bool m_cursor_enabled{true};
+        bool m_cursor_enabled = true;
+        bool torchEnabled = true;
     };
 }
 

@@ -27,6 +27,10 @@ namespace my_app {
             m_cursor_enabled = !m_cursor_enabled;
             platform->set_enable_cursor(m_cursor_enabled);
         }
+
+        if (platform->key(engine::platform::KEY_X).state() == engine::platform::Key::State::JustPressed) {
+            torchEnabled = !torchEnabled;
+        }
     }
 
     void MainController::update() {
@@ -50,7 +54,9 @@ namespace my_app {
         glm::vec3 dir_light_direction = glm::vec3(-0.3f, -1.0f, -0.2f);
         glm::vec3 dir_light_color = glm::vec3(0.2f, 0.2f, 0.35f);
         glm::vec3 point_light_position = glm::vec3(-1.1f, -4.1f, -18.625f);
-        glm::vec3 point_light_color = glm::vec3(1.0f, 0.6f, 0.2f);
+        glm::vec3 point_light_color = torchEnabled
+                                          ? glm::vec3(1.0f, 0.6f, 0.2f)
+                                          : glm::vec3(0.0f);
 
         auto resources = get<engine::resources::ResourcesController>();
         auto shader = resources->shader("basic");
