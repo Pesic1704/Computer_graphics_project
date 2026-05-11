@@ -17,6 +17,10 @@ namespace my_app {
 
         void update() override;
 
+        void update_camera();
+
+        void update_torch();
+
         void begin_draw() override;
 
         void draw() override;
@@ -35,10 +39,9 @@ namespace my_app {
 
         void end_draw() override;
 
-        void update_camera();
-
         bool m_cursor_enabled = true;
-        bool torchEnabled = true;
+        bool torch_enabled = true;
+        glm::vec3 torch_light;
     };
 }
 

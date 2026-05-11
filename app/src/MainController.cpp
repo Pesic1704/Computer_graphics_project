@@ -21,7 +21,7 @@ namespace my_app {
     }
 
     void MainController::poll_events() {
-        const auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+        const auto platform = get<engine::platform::PlatformController>();
 
         if (platform->key(engine::platform::KEY_F1).state() == engine::platform::Key::State::JustPressed) {
             m_cursor_enabled = !m_cursor_enabled;
@@ -29,12 +29,44 @@ namespace my_app {
         }
 
         if (platform->key(engine::platform::KEY_X).state() == engine::platform::Key::State::JustPressed) {
-            torchEnabled = !torchEnabled;
+            torch_enabled = !torch_enabled;
         }
     }
 
     void MainController::update() {
         update_camera();
+        update_torch();
+    }
+
+    void MainController::update_camera() {
+        auto platform = get<engine::platform::PlatformController>();
+        auto camera = get<engine::graphics::GraphicsController>()->camera();
+
+        float dt = platform->dt();
+        if (platform->key(engine::platform::KEY_W).state() == engine::platform::Key::State::Pressed) {
+            camera->move_camera(engine::graphics::Camera::Movement::FORWARD, dt);
+        }
+        if (platform->key(engine::platform::KEY_S).state() == engine::platform::Key::State::Pressed) {
+            camera->move_camera(engine::graphics::Camera::Movement::BACKWARD, dt);
+        }
+        if (platform->key(engine::platform::KEY_A).state() == engine::platform::Key::State::Pressed) {
+            camera->move_camera(engine::graphics::Camera::Movement::LEFT, dt);
+        }
+        if (platform->key(engine::platform::KEY_D).state() == engine::platform::Key::State::Pressed) {
+            camera->move_camera(engine::graphics::Camera::Movement::RIGHT, dt);
+        }
+
+        auto mouse = platform->mouse();
+        camera->rotate_camera(mouse.dx, mouse.dy);
+        camera->zoom(mouse.scroll);
+    }
+
+    void MainController::update_torch() {
+        if (torch_enabled) {
+            torch_light=glm::vec3(1.0f, 0.6f, 0.2f);
+        }else {
+            torch_light=glm::vec3(0.0f);
+        }
     }
 
     void MainController::begin_draw() {
@@ -54,9 +86,7 @@ namespace my_app {
         glm::vec3 dir_light_direction = glm::vec3(-0.3f, -1.0f, -0.2f);
         glm::vec3 dir_light_color = glm::vec3(0.2f, 0.2f, 0.35f);
         glm::vec3 point_light_position = glm::vec3(-1.1f, -3.9f, -18.5f);
-        glm::vec3 point_light_color = torchEnabled
-                                          ? glm::vec3(1.0f, 0.6f, 0.2f)
-                                          : glm::vec3(0.0f);
+        glm::vec3 point_light_color = torch_light;
 
         auto resources = get<engine::resources::ResourcesController>();
         auto shader = resources->shader("basic");
@@ -166,28 +196,5 @@ namespace my_app {
     void MainController::end_draw() {
         auto platform = get<engine::platform::PlatformController>();
         platform->swap_buffers();
-    }
-
-    void MainController::update_camera() {
-        auto platform = get<engine::platform::PlatformController>();
-        auto camera = get<engine::graphics::GraphicsController>()->camera();
-
-        float dt = platform->dt();
-        if (platform->key(engine::platform::KEY_W).state() == engine::platform::Key::State::Pressed) {
-            camera->move_camera(engine::graphics::Camera::Movement::FORWARD, dt);
-        }
-        if (platform->key(engine::platform::KEY_S).state() == engine::platform::Key::State::Pressed) {
-            camera->move_camera(engine::graphics::Camera::Movement::BACKWARD, dt);
-        }
-        if (platform->key(engine::platform::KEY_A).state() == engine::platform::Key::State::Pressed) {
-            camera->move_camera(engine::graphics::Camera::Movement::LEFT, dt);
-        }
-        if (platform->key(engine::platform::KEY_D).state() == engine::platform::Key::State::Pressed) {
-            camera->move_camera(engine::graphics::Camera::Movement::RIGHT, dt);
-        }
-
-        auto mouse = platform->mouse();
-        camera->rotate_camera(mouse.dx, mouse.dy);
-        camera->zoom(mouse.scroll);
     }
 }
