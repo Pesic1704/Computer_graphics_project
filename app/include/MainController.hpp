@@ -21,15 +21,14 @@ namespace my_app {
 
         void draw() override;
 
-        void draw_tower();
+        void draw_floor();
+ void draw_tower();
+
+        void draw_tree();
 
         void draw_reaper();
 
         void draw_torch();
-
-        void draw_tree();
-
-        void draw_floor();
 
         void end_draw() override;
 

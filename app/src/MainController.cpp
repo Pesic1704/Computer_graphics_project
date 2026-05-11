@@ -33,6 +33,28 @@ namespace my_app {
 
     void MainController::draw() {
         draw_floor();
+        draw_tower();
+        draw_tree();
+        draw_reaper();
+        draw_torch();
+    }
+
+    void MainController::draw_floor() {
+        auto graphics = get<engine::graphics::GraphicsController>();
+        auto resources = get<engine::resources::ResourcesController>();
+
+        auto shader = resources->shader("basic");
+        auto floor = resources->model("floor");
+
+        auto model_floor =
+                glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -5.0f, -20.0f)) *
+                glm::scale(glm::mat4(1.0f), glm::vec3(8.0f, 1.0f, 8.0f));
+
+        shader->use();
+        shader->set_mat4("projection", graphics->projection_matrix());
+        shader->set_mat4("view", graphics->camera()->view_matrix());
+        shader->set_mat4("model", model_floor);
+        floor->draw(shader);
     }
 
     void MainController::draw_tower() {
@@ -42,11 +64,35 @@ namespace my_app {
         auto shader = resources->shader("basic");
         auto tower = resources->model("tower");
 
+        auto model_tower =
+                glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.7f, -20.0f)) *
+                glm::rotate(glm::mat4(1.0f), glm::radians(175.0f), glm::vec3(0.0f, 1.0f, 0.0f)) *
+                glm::scale(glm::mat4(1.0f), glm::vec3(0.001f));
+
         shader->use();
         shader->set_mat4("projection", graphics->projection_matrix());
         shader->set_mat4("view", graphics->camera()->view_matrix());
-        shader->set_mat4("model", glm::scale(glm::mat4(0.01f), glm::vec3(0.001f)));
+        shader->set_mat4("model", model_tower);
         tower->draw(shader);
+    }
+
+    void MainController::draw_tree() {
+        auto graphics = get<engine::graphics::GraphicsController>();
+        auto resources = get<engine::resources::ResourcesController>();
+
+        auto shader = resources->shader("basic");
+        auto tree = resources->model("tree");
+
+        auto model_tree =
+                glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, -3.9f, -18.0f)) *
+                glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)) *
+                glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
+
+        shader->use();
+        shader->set_mat4("projection", graphics->projection_matrix());
+        shader->set_mat4("view", graphics->camera()->view_matrix());
+        shader->set_mat4("model", model_tree);
+        tree->draw(shader);
     }
 
     void MainController::draw_reaper() {
@@ -56,11 +102,15 @@ namespace my_app {
         auto shader = resources->shader("basic");
         auto reaper = resources->model("reaper");
 
+        auto model_reaper =
+                glm::translate(glm::mat4(1.0f), glm::vec3(2.5f, -4.9f, -18.5f)) *
+                glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)) *
+                glm::scale(glm::mat4(1.0f), glm::vec3(20.0f));
+
         shader->use();
         shader->set_mat4("projection", graphics->projection_matrix());
         shader->set_mat4("view", graphics->camera()->view_matrix());
-        shader->set_mat4("model", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f)),
-                                             glm::vec3(5.0f)));
+        shader->set_mat4("model", model_reaper);
         reaper->draw(shader);
     }
 
@@ -71,42 +121,16 @@ namespace my_app {
         auto shader = resources->shader("basic");
         auto torch = resources->model("torch");
 
+        auto model_torch =
+                glm::translate(glm::mat4(1.0f), glm::vec3(-1.1f, -4.1f, -18.625f)) *
+                glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)) *
+                glm::scale(glm::mat4(1.0f), glm::vec3(0.4f));
+
         shader->use();
         shader->set_mat4("projection", graphics->projection_matrix());
         shader->set_mat4("view", graphics->camera()->view_matrix());
-        shader->set_mat4("model", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f)),
-                                             glm::vec3(5.0f)));
+        shader->set_mat4("model", model_torch);
         torch->draw(shader);
-    }
-
-    void MainController::draw_tree() {
-        auto graphics = get<engine::graphics::GraphicsController>();
-        auto resources = get<engine::resources::ResourcesController>();
-
-        auto shader = resources->shader("basic");
-        auto tree = resources->model("tree");
-
-        shader->use();
-        shader->set_mat4("projection", graphics->projection_matrix());
-        shader->set_mat4("view", graphics->camera()->view_matrix());
-        shader->set_mat4("model", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f)),
-                                             glm::vec3(5.0f)));
-        tree->draw(shader);
-    }
-
-    void MainController::draw_floor() {
-        auto graphics = get<engine::graphics::GraphicsController>();
-        auto resources = get<engine::resources::ResourcesController>();
-
-        auto shader = resources->shader("basic");
-        auto floor = resources->model("floor");
-
-        shader->use();
-        shader->set_mat4("projection", graphics->projection_matrix());
-        shader->set_mat4("view", graphics->camera()->view_matrix());
-        shader->set_mat4("model", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f)),
-                                             glm::vec3(5.0f)));
-        floor->draw(shader);
     }
 
     void MainController::end_draw() {
