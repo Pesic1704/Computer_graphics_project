@@ -36,6 +36,8 @@ namespace my_app {
         void end_draw() override;
 
         void update_camera();
+
+        bool m_cursor_enabled{true};
     };
 }
 
