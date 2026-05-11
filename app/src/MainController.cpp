@@ -53,7 +53,7 @@ namespace my_app {
     void MainController::set_light() {
         glm::vec3 dir_light_direction = glm::vec3(-0.3f, -1.0f, -0.2f);
         glm::vec3 dir_light_color = glm::vec3(0.2f, 0.2f, 0.35f);
-        glm::vec3 point_light_position = glm::vec3(-1.1f, -4.1f, -18.625f);
+        glm::vec3 point_light_position = glm::vec3(-1.1f, -3.9f, -18.5f);
         glm::vec3 point_light_color = torchEnabled
                                           ? glm::vec3(1.0f, 0.6f, 0.2f)
                                           : glm::vec3(0.0f);
