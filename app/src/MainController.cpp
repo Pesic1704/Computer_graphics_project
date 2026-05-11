@@ -31,11 +31,17 @@ namespace my_app {
         if (platform->key(engine::platform::KEY_X).state() == engine::platform::Key::State::JustPressed) {
             torch_enabled = !torch_enabled;
         }
+
+        if (platform->key(engine::platform::KEY_R).state() == engine::platform::Key::State::JustPressed && reaper_angle
+            == 0.0f) {
+            reaper_orbiting = !reaper_orbiting;
+        }
     }
 
     void MainController::update() {
         update_camera();
         update_torch();
+        update_reaper();
     }
 
     void MainController::update_camera() {
@@ -63,9 +69,29 @@ namespace my_app {
 
     void MainController::update_torch() {
         if (torch_enabled) {
-            torch_light=glm::vec3(1.0f, 0.6f, 0.2f);
-        }else {
-            torch_light=glm::vec3(0.0f);
+            torch_light = glm::vec3(1.0f, 0.6f, 0.2f);
+        } else {
+            torch_light = glm::vec3(0.0f);
+        }
+    }
+
+    void MainController::update_reaper() {
+        if (reaper_orbiting) {
+            reaper_angle += 0.01f;
+
+            float radius = 2.5f;
+
+            reaper_position.x = 0.0f + cos(reaper_angle) * radius;
+
+            reaper_position.y = -4.9f;
+
+            reaper_position.z = -18.5f + sin(reaper_angle) * radius;
+
+            if (reaper_angle >= glm::two_pi<float>()) {
+                reaper_orbiting = false;
+                reaper_angle = 0.0f;
+                reaper_position = glm::vec3(2.5f, -4.9f, -18.5f);
+            }
         }
     }
 
@@ -163,8 +189,8 @@ namespace my_app {
         auto reaper = resources->model("reaper");
 
         auto model_reaper =
-                glm::translate(glm::mat4(1.0f), glm::vec3(2.5f, -4.9f, -18.5f)) *
-                glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)) *
+                glm::translate(glm::mat4(1.0f), reaper_position) *
+                glm::rotate(glm::mat4(1.0f), glm::radians(reaper_angle), glm::vec3(0.0f, 1.0f, 0.0f)) *
                 glm::scale(glm::mat4(1.0f), glm::vec3(20.0f));
 
         shader->use();

@@ -21,6 +21,8 @@ namespace my_app {
 
         void update_torch();
 
+        void update_reaper();
+
         void begin_draw() override;
 
         void draw() override;
@@ -40,8 +42,13 @@ namespace my_app {
         void end_draw() override;
 
         bool m_cursor_enabled = true;
+
         bool torch_enabled = true;
         glm::vec3 torch_light;
+
+        bool reaper_orbiting = false;
+        float reaper_angle = 0.0f;
+        glm::vec3 reaper_position = glm::vec3(2.5f, -4.9f, -18.5f);
     };
 }
 
