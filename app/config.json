@@ -1,6 +1,26 @@
 {
   "resources": {
     "models": {
+      "tower": {
+        "path": "tower/tower.obj",
+        "flip_uvs": false
+      },
+      "reaper": {
+        "path": "reaper/reaper.obj",
+        "flip_uvs": false
+      },
+      "torch": {
+        "path": "torch/torch.obj",
+        "flip_uvs": false
+      },
+      "tree": {
+        "path": "tree/tree.obj",
+        "flip_uvs": false
+      },
+      "floor": {
+        "path": "floor/floor.obj",
+        "flip_uvs": false
+      }
     }
   },
   "window": {
